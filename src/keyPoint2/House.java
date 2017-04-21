@@ -1,4 +1,4 @@
-package com.keyPoint2;
+package keyPoint2;
 
 public class House {
 	

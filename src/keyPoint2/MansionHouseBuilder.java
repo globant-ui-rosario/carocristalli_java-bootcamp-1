@@ -1,28 +1,28 @@
-package com.keyPoint2;
-//First Concrete Builder
-public class StudioApartmentHouseBuilder implements HouseBuilder {
+package keyPoint2;
+//Second Concrete Builder
+public class MansionHouseBuilder implements HouseBuilder {
 	
 	private House house;
 	
-	public StudioApartmentHouseBuilder(){
+	public MansionHouseBuilder(){
 		this.house = new House();
 	}
 
 	@Override
 	public void buildAddress() {
-		this.house.setAddress("2050 Bamako Place. Washington, DC 20521-2050");
+		this.house.setAddress("7100 Athens Place. Washington, DC 20521-2050");
 		
 	}
 
 	@Override
 	public void buildRooms() {
-		this.house.setRooms(2);
+		this.house.setRooms(16);
 		
 	}
 
 	@Override
 	public void buildSquaredMeters() {
-		this.house.setSquaredMeters(20.5);
+		this.house.setSquaredMeters(674.3);
 		
 	}
 
