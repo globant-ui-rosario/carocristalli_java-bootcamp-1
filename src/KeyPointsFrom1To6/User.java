@@ -1,4 +1,4 @@
-package Topic1;
+package KeyPointsFrom1To6;
 
 public class User {
 	

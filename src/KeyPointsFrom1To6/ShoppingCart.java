@@ -1,14 +1,13 @@
-package Topic1;
+package KeyPointsFrom1To6;
 
 import java.util.List;
-import java.util.Observer;
 
 public class ShoppingCart {
 	
 	private List<Item> items;
 	private User user;
 	private Payment payment;
-	private List<Observer> observers;
+	
 	
 	public ShoppingCart() {
 
@@ -33,14 +32,7 @@ public class ShoppingCart {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
-	public List<Observer> getObservers() {
-		return observers;
-	}
-	
-	public void setObservers(List<Observer> observers) {
-		this.observers = observers;
-	}
-	
+		
 	@SuppressWarnings("rawtypes")
 	public double getAmount() {
 		
@@ -54,7 +46,7 @@ public class ShoppingCart {
 
 	@Override
 	public String toString() {
-		return "ShoppingCart [items=" + items + ", user=" + user + ", payment=" + payment + ", observers=" + observers
+		return "ShoppingCart [items=" + items + ", user=" + user + ", payment=" + payment 
 				+ "]";
 	}
 	
@@ -82,6 +74,21 @@ public class ShoppingCart {
 		return expensiveItem;
 
 	}
+	
+	public void pay(PaymentTransaction transaction) {
 
+		this.payment.pay(this, transaction.newTransaction());
+
+		}
+
+	public void showItems() {
+
+		for (Item item : this.items){
+			System.out.println("Product: "+item.getProductName() + " - Unit Price: " + item.getUnitPrice() + " - Total: " + item.getUnitPrice()*item.getQuantity());  
+		}
+
+		}
+
+	
 
 }
