@@ -1,4 +1,4 @@
-package KeyPointsFrom1To6;
+package Domain;
 
 public interface Payment {
 
