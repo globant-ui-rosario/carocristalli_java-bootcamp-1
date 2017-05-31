@@ -1,15 +1,13 @@
-package Domain;
+package Topic4.rest;
 
 public class CreditCard implements Payment {
 	
-	@Override
 	public double getAmount(ShoppingCart shoppingCart) {
 
 		return shoppingCart.getAmount()-shoppingCart.getAmount()*0.1;
 
 }
 
-	@Override
 	public void pay(ShoppingCart shoppingCart, int NumberofThePaymentTransaction) {
 		System.out.println(shoppingCart.getUser().getUsername()
 				+ " paid with a Credit Card which number is "+shoppingCart.getUser().getCreditCardNumber()+

@@ -1,8 +1,8 @@
-package Domain;
+package Topic4.rest;
 
 import java.util.List;
 
-public class ShoppingCart {
+public class ShoppingCart implements RESTService {
 	
 	private List<Item> items;
 	private User user;
@@ -14,15 +14,18 @@ public class ShoppingCart {
 		
 }
 	
+	@Override
 	public List<Item> getItems() {
 		return items;
 	}
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
+	@Override
 	public User getUser() {
 		return user;
 	}
+	@Override
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -89,6 +92,22 @@ public class ShoppingCart {
 
 		}
 
+	
+
+	@Override
+	public void deleteAnItemFromTheList(Item item) {
+		items.remove(item);
+		
+	}
+
+	
+	@Override
+	public void addItems(Item item) {
+		this.items.add(item);
+		
+	}
+
+	
 	
 
 }

@@ -1,4 +1,4 @@
-package Domain;
+package Topic4.rest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class Item implements SaleSubject{
 		this.quantity = quantity;
 		this.productName = product;
 		this.unitPrice = unitPrice;	
-		this.observers = new ArrayList<>();
+		this.observers = new ArrayList<SaleObserver>();
 	}
 	
 	public int getQuantity() {
@@ -39,19 +39,16 @@ public class Item implements SaleSubject{
 
 	
 
-	@Override
 	public void addObserver(SaleObserver saleObserver) {
 		this.observers.add(saleObserver);
 		
 	}
 
-	@Override
 	public void removeObserver(SaleObserver saleObserver) {
 		this.observers.remove(saleObserver);
 		
 	}
 
-	@Override
 	public void doNotify() {
 		for (SaleObserver saleObserver : this.observers) {
 			saleObserver.doUpdate("The price has been changed.");

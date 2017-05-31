@@ -1,4 +1,4 @@
-package Domain;
+package Topic4.rest;
 
 public interface SaleObserver {
 
