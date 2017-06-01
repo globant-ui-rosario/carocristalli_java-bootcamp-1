@@ -1,18 +1,17 @@
 package Topic5;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 
 public class MySQLAccess {
 
     private Connection connect = null;
     private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
     public void readDataBase() throws Exception {
@@ -27,37 +26,26 @@ public class MySQLAccess {
             // Statements allow to issue SQL queries to the database
             statement = connect.createStatement();
             // Result set get the result of the SQL query
-            resultSet = statement
-                    .executeQuery("select * from highSchool.students");
-            writeResultSet(resultSet);
-/*
-            // PreparedStatements can use variables and are more efficient
-            preparedStatement = connect
-                    .prepareStatement("insert into  feedback.comments values (default, ?, ?, ?, ? , ?, ?)");
-            // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
-            // Parameters start with 1
-            preparedStatement.setString(1, "Test");
-            preparedStatement.setString(2, "TestEmail");
-            preparedStatement.setString(3, "TestWebpage");
-            preparedStatement.setDate(4, new java.sql.Date(2009, 12, 11));
-            preparedStatement.setString(5, "TestSummary");
-            preparedStatement.setString(6, "TestComment");
-            preparedStatement.executeUpdate();
 
-            preparedStatement = connect
-                    .prepareStatement("SELECT myuser, webpage, datum, summary, COMMENTS from feedback.comments");
-            resultSet = preparedStatement.executeQuery();
-            writeResultSet(resultSet);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-            // Remove again the insert comment
-            preparedStatement = connect
-                    .prepareStatement("delete from feedback.comments where myuser= ? ; ");
-            preparedStatement.setString(1, "Test");
-            preparedStatement.executeUpdate();
+            System.out.println("Enter course:");
+            String input = reader.readLine();
 
             resultSet = statement
-                    .executeQuery("select * from feedback.comments");
-            writeMetaData(resultSet);*/
+                    .executeQuery("select * from highSchool.teachers t inner join highSchool.courses c on t.id = c.teacher where c.name = '" + input + "'");
+            writeResultForKeyPointFour(resultSet);
+            resultSet = statement
+                    .executeQuery("select * from highSchool.students s inner join highSchool.inscriptions i on s.registrationNumber = i.student");
+            writeResultForKeyPointFour2(resultSet);
+
+            System.out.println("Enter student:");
+            String student = reader.readLine();
+
+            resultSet = statement
+                    .executeQuery("select * from highSchool.inscriptions i inner join highSchool.students s on i.student = s.registrationNumber where i.student=" + student + ";");
+            writeResultForKeyPointFive(resultSet);
+
 
         } catch (Exception e) {
             throw e;
@@ -74,28 +62,51 @@ public class MySQLAccess {
         System.out.println("The columns in the table are: ");
 
         System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
-        for  (int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++){
-            System.out.println("Column " +i  + " "+ resultSet.getMetaData().getColumnName(i));
+        for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+            System.out.println("Column " + i + " " + resultSet.getMetaData().getColumnName(i));
         }
     }
 
-    private void writeResultSet(ResultSet resultSet) throws SQLException {
+    private void writeResultForKeyPointFour(ResultSet resultSet) throws SQLException {
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
-            // It is possible to get the columns via name
-            // also possible to get the columns via the column number
-            // which starts at 1
-            // e.g. resultSet.getSTring(2);
-            String user = resultSet.getString("myuser");
-            String website = resultSet.getString("webpage");
-            String summary = resultSet.getString("summary");
-            Date date = resultSet.getDate("datum");
-            String comment = resultSet.getString("comments");
-            System.out.println("User: " + user);
-            System.out.println("Website: " + website);
-            System.out.println("summary: " + summary);
-            System.out.println("Date: " + date);
-            System.out.println("Comment: " + comment);
+
+            String course = resultSet.getString("c.name");
+            String teacherFirstName = resultSet.getString("t.lastName");
+            String teacherLastName = resultSet.getString("t.firstName");
+
+            System.out.println("Course: " + course);
+            System.out.println("Teacher: " + teacherLastName + ", " + teacherFirstName);
+            System.out.println("Students: ");
+
+        }
+    }
+
+    private void writeResultForKeyPointFour2(ResultSet resultSet) throws SQLException {
+
+        while (resultSet.next()) {
+
+            String studentFirstName = resultSet.getString("s.lastName");
+            String studentLastName = resultSet.getString("s.firstName");
+
+            System.out.println("\n " + studentLastName + ", " + studentFirstName);
+
+
+        }
+    }
+
+    private void writeResultForKeyPointFive(ResultSet resultSet) throws SQLException {
+
+        while (resultSet.next()) {
+
+            String studentFirstName = resultSet.getString("s.lastName");
+            String studentLastName = resultSet.getString("s.firstName");
+            Double average = resultSet.getDouble("i.note1") + resultSet.getDouble("i.note2") + resultSet.getDouble("i.note3") / 3;
+
+
+            System.out.println("\n " + studentLastName + ", " + studentFirstName + ": " + average);
+
+
         }
     }
 
