@@ -2,8 +2,8 @@ package Topic4.rest;
 
 public interface Payment {
 
-	double getAmount(ShoppingCart shoppingCart);
+	double getAmount(ShoppingCartImp shoppingCart);
 
-	void pay(ShoppingCart shoppingCart, int NumberofThePaymentTransaction);
+	void pay(ShoppingCartImp shoppingCart, int NumberofThePaymentTransaction);
 
 }

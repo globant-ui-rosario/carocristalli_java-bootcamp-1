@@ -1,111 +1,49 @@
 package Topic4.rest;
 
+
+
 import java.util.List;
 
-public class ShoppingCart implements RESTService {
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+
+
+@Path("/shoppingCartService")
+public interface ShoppingCart {
 	
-	private List<Item> items;
-	private User user;
-	private Payment payment;
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/getItems")
+	public List<Item> getItems();
+
+	@POST
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("/addItems/{items}")
+	public void addItems(@PathParam("item") List<Item> items);
 	
+	@DELETE
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("/deleteItem/{item}")
+	public void deleteAnItemFromTheList(@PathParam("item") Item item);
 	
-	public ShoppingCart() {
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/getUser")
+	public User getUser();
 
-		
-}
-	
-	@Override
-	public List<Item> getItems() {
-		return items;
-	}
-	public void setItems(List<Item> items) {
-		this.items = items;
-	}
-	@Override
-	public User getUser() {
-		return user;
-	}
-	@Override
-	public void setUser(User user) {
-		this.user = user;
-	}
-	public Payment getPayment() {
-		return payment;
-	}
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
-		
-	@SuppressWarnings("rawtypes")
-	public double getAmount() {
-		
-	    double amount = 0;  
-	    for (Item item : items) {
-			amount += item.getUnitPrice()*item.getQuantity();
-		}
-	    return amount;
-	           		
-	}
-
-	@Override
-	public String toString() {
-		return "ShoppingCart [items=" + items + ", user=" + user + ", payment=" + payment 
-				+ "]";
-	}
-	
-	
-	
-	public Item getCheapestItem() {
-
-		Item cheapestItem = items.get(0);
-		for (Item item : items) {
-			if (item.getUnitPrice()*item.getQuantity() < cheapestItem.getUnitPrice()*item.getQuantity()) {
-				cheapestItem = item;
-			}
-		}
-		return cheapestItem;
-
-	}
-
-	public Item getExpensiveItem() {
-		Item expensiveItem = items.get(0);
-		for (Item item : items) {
-			if (item.getUnitPrice()*item.getQuantity() > expensiveItem.getUnitPrice()*item.getQuantity()) {
-				expensiveItem = item;
-			}
-		}
-		return expensiveItem;
-
-	}
-	
-	public void pay(PaymentTransaction transaction) {
-
-		this.payment.pay(this, transaction.newTransaction());
-
-		}
-
-	public void showItems() {
-
-		for (Item item : this.items){
-			System.out.println("Product: "+item.getProductName() + " - Unit Price: " + item.getUnitPrice() + " - Total: " + item.getUnitPrice()*item.getQuantity());  
-		}
-
-		}
+	@POST
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("/setUser/{user}")
+	public void setUser(@PathParam("user") User user);
 
 	
-
-	@Override
-	public void deleteAnItemFromTheList(Item item) {
-		items.remove(item);
-		
-	}
-
-	
-	@Override
-	public void addItems(Item item) {
-		this.items.add(item);
-		
-	}
 
 	
 	
