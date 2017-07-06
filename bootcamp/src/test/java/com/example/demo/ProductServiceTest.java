@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.mockito.Mock;
@@ -22,7 +23,7 @@ public class ProductServiceTest {
 	        product.setProductname("Jeans"); 
 	        product.setCategory("Clothes");
 
-	       // when(productRepository.findByProductnameOrCategory("Jeans", "Clothes")).thenReturn(product);
+	        when(productRepository.findByProductnameOrCategory("Jeans", "Clothes")).thenReturn(product);
 
 	        assertEquals(productRepository.findByProductnameOrCategory("Jeans", "Clothes"), product);
 
